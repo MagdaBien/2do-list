@@ -30,4 +30,11 @@ io.on("connection", (socket) => {
     tasks.splice(taskIndex, 1);
     // console.log("usunięto zadanie: " + taskId);
   });
+
+  socket.on("updateTask", (updatedTask) => {
+    //console.log("przyszedł task updated : " + updatedTask.name);
+    const taskIndex = tasks.findIndex((task) => task.id == updatedTask.id);
+    tasks[taskIndex] = updatedTask;
+    socket.broadcast.emit("updatedTask", updatedTask);
+  });
 });
